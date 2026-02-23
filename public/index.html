@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media & Reel Script Generator</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/ContentGen-logo.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Marked.js for Markdown Parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <main class="container">
+        <header>
+            <div class="logo-area">
+                <img src="/images/ContentGen-logo.png" alt="ContentGen Logo" class="brand-logo">
+                <h1>Content<span class="highlight">Gen</span></h1>
+            </div>
+            <p class="subtitle">AI-Powered Social Media & Reel Script Generator</p>
+        </header>
+
+        <div class="grid-layout">
+            <section class="input-section glass-panel">
+                <form id="generator-form">
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" name="businessName"
+                            placeholder="e.g., Euro Marble and Granite Ltd or Euro IT" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="niche">Niche / Industry</label>
+                        <input type="text" id="niche" name="niche"
+                            placeholder="e.g., Real Estate, Digital Marketing, E-commerce" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="targetAudience">Target Audience</label>
+                            <input type="text" id="targetAudience" name="targetAudience"
+                                placeholder="e.g., Corporate clients, Homeowners, Students" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="language">Output Language</label>
+                            <div class="select-wrapper">
+                                <select id="language" name="language" required>
+                                    <option value="English">English</option>
+                                    <option value="Bengali">Bengali</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tone">Tone</label>
+                            <div class="select-wrapper">
+                                <select id="tone" name="tone" required>
+                                    <option value="Professional">Professional</option>
+                                    <option value="Engaging">Engaging</option>
+                                    <option value="Humorous">Humorous</option>
+                                    <option value="Trendy">Trendy</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contentType">Content Type</label>
+                            <div class="select-wrapper">
+                                <select id="contentType" name="contentType" required>
+                                    <option value="30-Day Content Calendar">30-Day Content Calendar</option>
+                                    <option value="Reel Script">Reel Script</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="calendar-options" class="form-row">
+                        <div class="form-group">
+                            <label for="graphicsCount">Graphics per Month</label>
+                            <input type="number" id="graphicsCount" name="graphicsCount" placeholder="e.g., 10" min="0"
+                                value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="reelsCount">Reels per Month</label>
+                            <input type="number" id="reelsCount" name="reelsCount" placeholder="e.g., 15" min="0"
+                                value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="motionCount">Motion Videos per Month</label>
+                            <input type="number" id="motionCount" name="motionCount" placeholder="e.g., 3" min="0"
+                                value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="liveCount">Live Sessions per Month</label>
+                            <input type="number" id="liveCount" name="liveCount" placeholder="e.g., 2" min="0"
+                                value="0">
+                        </div>
+                    </div>
+
+                    <button type="submit" id="generate-btn" class="primary-btn">
+                        <span class="btn-text">Generate Content</span>
+                        <div class="loader hidden"></div>
+                    </button>
+
+                    <div id="error-message" class="error-msg hidden"></div>
+                </form>
+            </section>
+
+            <section class="output-section glass-panel">
+                <div class="output-header">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <button id="toggle-form-btn" class="icon-btn hidden" title="Toggle Input Form">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <h2>Generated Content</h2>
+                    </div>
+                    <button id="copy-btn" class="icon-btn hidden" title="Copy to clipboard">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="output-area" class="output-content empty">
+                    <div class="empty-state">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            class="empty-icon">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <line x1="10" y1="9" x2="8" y2="9"></line>
+                        </svg>
+                        <p>Your AI-generated content will appear here.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; <span id="current-year"></span> ContentGen. All rights reserved. | Developed by: <a
+                href="https://shakilmahmud.vercel.app" target="_blank" rel="noopener noreferrer">Shakil Mahmud</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>
